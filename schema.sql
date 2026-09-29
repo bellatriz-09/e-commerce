@@ -1,17 +1,6 @@
--- ============================================================
--- Esquema Lógico — E-commerce
--- Mapeamento do modelo conceitual, com refinamentos EER:
---   - Cliente PF/PJ (especialização disjunta, via CHECK)
---   - Cliente pode cadastrar mais de uma forma de pagamento
---   - Entrega com status e código de rastreio
--- ============================================================
-
 CREATE DATABASE IF NOT EXISTS ecommerce;
 USE ecommerce;
 
--- Cliente: especialização PF/PJ mapeada na própria tabela.
--- CHECK garante que nunca existam cpf e cnpj preenchidos ao mesmo tempo,
--- nem os dois vazios (todo cliente é PF ou PJ).
 CREATE TABLE cliente (
     id_cliente      INT AUTO_INCREMENT PRIMARY KEY,
     nome            VARCHAR(150) NOT NULL,
@@ -68,7 +57,6 @@ CREATE TABLE produto (
     FOREIGN KEY (id_vendedor) REFERENCES vendedor(id_vendedor)
 );
 
--- Associação N:N entre produto e fornecedor; guarda o estoque por fornecedor.
 CREATE TABLE produto_fornecedor (
     id_produto          INT NOT NULL,
     id_fornecedor       INT NOT NULL,
@@ -88,7 +76,6 @@ CREATE TABLE pedido (
     FOREIGN KEY (id_endereco) REFERENCES endereco(id_endereco)
 );
 
--- Associação N:N entre pedido e produto, com os dados próprios da venda.
 CREATE TABLE item_pedido (
     id_pedido       INT NOT NULL,
     id_produto      INT NOT NULL,
@@ -99,7 +86,6 @@ CREATE TABLE item_pedido (
     FOREIGN KEY (id_produto) REFERENCES produto(id_produto)
 );
 
--- Refinamento: cliente pode cadastrar mais de uma forma de pagamento (1:N).
 CREATE TABLE forma_pagamento (
     id_forma_pagamento  INT AUTO_INCREMENT PRIMARY KEY,
     id_cliente          INT NOT NULL,
@@ -108,7 +94,6 @@ CREATE TABLE forma_pagamento (
     FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente)
 );
 
--- Pagamento é a transação de um pedido específico, usando uma das formas cadastradas.
 CREATE TABLE pagamento (
     id_pagamento        INT AUTO_INCREMENT PRIMARY KEY,
     id_pedido           INT NOT NULL UNIQUE,
@@ -120,7 +105,6 @@ CREATE TABLE pagamento (
     FOREIGN KEY (id_forma_pagamento) REFERENCES forma_pagamento(id_forma_pagamento)
 );
 
--- Refinamento: entrega com status e código de rastreio.
 CREATE TABLE entrega (
     id_entrega              INT AUTO_INCREMENT PRIMARY KEY,
     id_pedido               INT NOT NULL UNIQUE,
