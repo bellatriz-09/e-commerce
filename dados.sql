@@ -1,6 +1,5 @@
 USE ecommerce;
 
--- Clientes: mix de PF e PJ (nunca os dois preenchidos)
 INSERT INTO cliente (nome, email, telefone, cpf, cnpj) VALUES
 ('Ana Souza',              'ana.souza@email.com',     '93991112222', '12345678901', NULL),
 ('Carlos Lima',            'carlos.lima@email.com',   '93991113333', '23456789012', NULL),
@@ -23,7 +22,6 @@ INSERT INTO fornecedor (nome, cnpj, telefone, email) VALUES
 ('TechParts Distribuidora', '33444555000166', '9133345566', 'contato@techparts.com'),
 ('Casa & Cia Atacado',      '44555666000177', '9155667788', 'atacado@casaecia.com');
 
--- Vendedor 1 usa o MESMO cnpj do fornecedor 1: é a mesma empresa atuando nos dois papéis.
 INSERT INTO vendedor (nome, cnpj, telefone, email) VALUES
 ('Distribuidora Norte ME',   '22333444000155', '9333322211', 'vendas@distnorte.com'),
 ('Loja Digital Amazônia',    '55666777000188', '9144556677', 'contato@digitalamazonia.com');
@@ -71,7 +69,6 @@ INSERT INTO pagamento (id_pedido, id_forma_pagamento, valor, data_pagamento, sta
 (2, 2,  189.90, '2026-09-10 14:05:00', 'aprovado'),
 (3, 3, 3299.00, '2026-08-20 09:35:00', 'aprovado'),
 (4, 4,  419.60, '2026-09-05 16:50:00', 'aprovado');
--- Pedido 5 segue em aberto, sem pagamento registrado ainda.
 
 INSERT INTO entrega (id_pedido, status, codigo_rastreio, data_envio, data_entrega_prevista) VALUES
 (1, 'entregue',    'BR123456789PA', '2026-08-02 08:00:00', '2026-08-05'),
